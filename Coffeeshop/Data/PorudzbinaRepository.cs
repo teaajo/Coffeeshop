@@ -24,7 +24,7 @@ namespace Coffeeshop.Data
         }
         public PorudzbineConfirmation CreatePorudzbina(Porudzbine porudzbinaModel, List<ProizvodConfirmation> proizvodi)//i lista proizvoda
         {
-            
+            porudzbinaModel.Iznos = 0;
             //pre ovoga prodji kroz proizvode i izracunaj iznos
             foreach(var a in proizvodi)
             {
