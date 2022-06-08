@@ -25,6 +25,8 @@ namespace Coffeeshop.Data
         public PorudzbineConfirmation CreatePorudzbina(Porudzbine porudzbinaModel, List<ProizvodConfirmation> proizvodi)//i lista proizvoda
         {
             porudzbinaModel.Iznos = 0;
+            porudzbinaModel.Datum = DateTime.Now;
+            porudzbinaModel.Status = "Aktivan";
             //pre ovoga prodji kroz proizvode i izracunaj iznos
             foreach(var a in proizvodi)
             {
@@ -61,6 +63,10 @@ namespace Coffeeshop.Data
         public List<Porudzbine> GetPorudzbine()
         {
             return context.Porudzbines.ToList();
+        }
+        public List<PorudzbineConfirmation> GetPorudzbinaByKorisnikId(int Korisnikid)
+        {
+              return mapper.Map <List < PorudzbineConfirmation >>( context.Porudzbines.Where(e => e.IdKorisnik == Korisnikid).ToList());
         }
 
         public bool SaveChanges()

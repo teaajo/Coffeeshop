@@ -28,7 +28,7 @@ namespace Coffeeshop.Helpers
         }
         public bool AuthenticatePrincipal(Principal principal)
         {
-            if (loginRepository.UserWithCredentialsExists(principal.KorisnickoIme, principal.Lozinka))
+            if (loginRepository.UserWithCredentialsExists(principal.Ime, principal.Lozinka))
             {
                 return true;
             }
@@ -44,10 +44,11 @@ namespace Coffeeshop.Helpers
            
         }
 
-        public string GenerateJwt(Principal principal)
+        public string GenerateJwt(Principal principal, out string tip, out int id)
         {
 
-            string tip = context.KorisnikSistemas.First(e => e.KorisnickoIme == principal.KorisnickoIme).Tip;
+             tip = context.KorisnikSistemas.First(e => e.KorisnickoIme == principal.Ime).Tip;
+            id = context.KorisnikSistemas.First(e => e.KorisnickoIme == principal.Ime).Id;
             
           // string tip = context.KorisnikSistemas.Include(t => t.Tip).First(e => e.KorisnickoIme == principal.KorisnickoIme).Tip.ToString();
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));

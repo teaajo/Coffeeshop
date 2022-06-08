@@ -13,7 +13,7 @@ namespace Coffeeshop.Helpers
 
         public bool AuthenticatePrincipal(Principal principal);
 
-        public string GenerateJwt(Principal principal);
+        public string GenerateJwt(Principal principal,out string tip, out int id);
         public void CreateHash(KorisnikSistema korisnik);   
     }
 }

@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 
 namespace Coffeeshop.Models
 {
-    public class Principal
+    public class Uloga
     {
-        public string Ime { get; set; }
-        public string Lozinka { get; set; }
+        public string token { get; set; }
+        public string uloga { get; set; }
+        public int id { get; set; }
+
     }
 }

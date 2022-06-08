@@ -41,7 +41,10 @@ namespace Coffeeshop.Data
         {
             return context.Ocenas.FirstOrDefault(e => e.Id == ocenaId);
         }
-
+        public List<OcenaConfirmation> GetOcenaByKorisnikId(int korisnikId)
+        {
+            return mapper.Map<List<OcenaConfirmation>>(context.Ocenas.Where(e => e.IdKorisnik == korisnikId).ToList());
+        }
         public List<Ocena> GetOcena()
         {
             //return mapper.Map<List<OcenaConfirmation>>(context.Ocenas.ToList());

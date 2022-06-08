@@ -17,7 +17,7 @@ namespace Coffeeshop.Controllers
     [ApiController]
     [Route("api/korisnik")]
     [Produces("application/json", "application/xml")]
-    [Authorize(Roles = "Zaposleni")]
+    [Authorize(Roles = "Zaposleni, Kupac")]
     public class KorisnikSistemaController : ControllerBase
     {
         private readonly IKorisnikSistemaRepository korisnikSistemaRepository;
@@ -56,7 +56,7 @@ namespace Coffeeshop.Controllers
 
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Roles = "Zaposleni")]
+        [Authorize(Roles = "Zaposleni, Kupac")]
 
         [HttpGet("{id}")]
         public ActionResult<KorisnikDto> GetKorisnik(int id)

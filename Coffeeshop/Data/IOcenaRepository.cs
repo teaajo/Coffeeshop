@@ -18,6 +18,8 @@ namespace Coffeeshop.Data
 
         void DeleteOcena(int ocenaId);
 
+        List<OcenaConfirmation> GetOcenaByKorisnikId(int korisnikId);
+
 
 
         bool SaveChanges();

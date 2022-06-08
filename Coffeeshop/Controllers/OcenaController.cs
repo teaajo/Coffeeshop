@@ -67,6 +67,22 @@ namespace Coffeeshop.Controllers
             return Ok(mapper.Map<OcenaConfirmation>(ocenaModel));
         }
 
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "Zaposleni, Kupac")]
+        [HttpGet("/ocenabyKorisnik/{id}")]
+        public ActionResult<OcenaConfirmation> GetOcenaByKorisnikId(int id)
+        {
+            List<OcenaConfirmation> ocenaModel = ocenaRepository.GetOcenaByKorisnikId(id);
+            if (ocenaModel == null)
+            {
+
+                return NotFound();
+            }
+
+            return Ok(ocenaModel);
+        }
+
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

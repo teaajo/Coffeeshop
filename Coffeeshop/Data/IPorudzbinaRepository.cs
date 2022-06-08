@@ -18,6 +18,8 @@ namespace Coffeeshop.Data
 
         void DeletePorudzbina(int porudzbinaId);
 
+       List< PorudzbineConfirmation> GetPorudzbinaByKorisnikId(int Korisnikid);
+
 
 
         bool SaveChanges();

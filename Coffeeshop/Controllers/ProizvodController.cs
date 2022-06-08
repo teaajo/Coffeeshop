@@ -80,12 +80,12 @@ namespace Coffeeshop.Controllers
         {
 
             List<Proizvod> proizvodi = proizvodRepository.GetProizvodByTip(tip);
-            if (proizvodi == null || proizvodi.Count == 0)
+           /* if (proizvodi == null || proizvodi.Count == 0)
             {
 
                 return NotFound();
 
-            }
+            }*/
 
             return Ok(mapper.Map<List<ProizvodDto>>(proizvodi));
 

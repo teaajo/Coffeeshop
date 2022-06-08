@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -22,6 +23,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -112,6 +114,8 @@ namespace Coffeeshop
                 };
             });
 
+            services.Configure<IdentityOptions>(options => options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
+
 
 
             // Znaci da cim se napravi objekat ExamRegistrationController-a i inject-uje IExamRegistrationRepository, kreira se jedna instanca objekta klase ExamRegistrationRepository
@@ -171,6 +175,17 @@ namespace Coffeeshop
             string connectionString = Configuration.GetConnectionString("KorisnikDB");
             services.AddDbContextPool<it70g2018Context>(options => options.UseSqlServer(connectionString));
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44215", "http://localhost:61000")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
+
 
         }
     
@@ -208,12 +223,21 @@ namespace Coffeeshop
 
             app.UseRouting();
 
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

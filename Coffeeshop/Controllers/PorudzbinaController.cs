@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Coffeeshop.Controllers
@@ -36,7 +37,7 @@ namespace Coffeeshop.Controllers
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [Authorize(Roles = "Zaposleni, Dostavljac")]
+        [Authorize(Roles = "Kupac,Zaposleni, Dostavljac")]
         public ActionResult<List<PorudzbineConfirmation>> GetPorudzbine()
         {
 
@@ -59,6 +60,23 @@ namespace Coffeeshop.Controllers
         {
 
             Porudzbine porudzbinaModel = porudzbinaRepository.GetById(id);
+            if (porudzbinaModel == null)
+            {
+
+                return NotFound();
+            }
+
+            return Ok(porudzbinaModel);
+        }
+
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "Kupac,Zaposleni")]
+        [HttpGet("/porudzbinabykorisnik/{id}")]
+        public ActionResult<List<PorudzbineConfirmation>> GetPorudzbinaByKorisnikId(int id)
+        {
+
+            List<PorudzbineConfirmation> porudzbinaModel = porudzbinaRepository.GetPorudzbinaByKorisnikId(id);
             if (porudzbinaModel == null)
             {
 
@@ -104,13 +122,14 @@ namespace Coffeeshop.Controllers
         [Authorize(Roles = "Zaposleni, Kupac")]
         public ActionResult<PorudzbineConfirmation> CreatePorudzbina([FromBody] PorudzbineCreation porudzbine)
         {
+            
             try
             {
                 foreach(var a in porudzbine.Proizvodi)
                 {
                     if(a.Kolicina==0)
                     {
-                        return StatusCode(StatusCodes.Status500InternalServerError, "Proizvod nije na stanju!");
+                        return StatusCode(StatusCodes.Status100Continue, "Proizvod nije na stanju!");
                     }
                 }
                 Porudzbine porudzbina = mapper.Map<Porudzbine>(porudzbine);
@@ -168,6 +187,8 @@ namespace Coffeeshop.Controllers
 
 
         }
+
+     
 
         [HttpOptions]
         public IActionResult GetkorisnikOptions()

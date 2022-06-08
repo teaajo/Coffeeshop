@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Coffeeshop.Controllers
@@ -33,10 +34,13 @@ namespace Coffeeshop.Controllers
         public IActionResult Authenticate(Principal principal)
         {
             //Pokušaj autentifikacije
+            string tip;
+            int id;
             if (authenticationHelper.AuthenticatePrincipal(principal))
             {
-                var tokenString = authenticationHelper.GenerateJwt(principal);
-                return Ok(new { token = tokenString });
+                string tokenString = authenticationHelper.GenerateJwt(principal,out tip, out id);
+
+                return Ok(new Uloga(){ token = tokenString,uloga=tip, id=id });
             }
 
             //Ukoliko autentifikacija nije uspela vraća se status 401

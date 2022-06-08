@@ -53,6 +53,7 @@ namespace Coffeeshop.Data
         {
             return context.Proizvods.Include(t => t.IdTipNavigation).Where(k => k.IdTipNavigation.Tip == tip).ToList();
         }
+       
 
         public bool SaveChanges()
         {
