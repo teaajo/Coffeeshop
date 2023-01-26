@@ -12,7 +12,7 @@ namespace Coffeeshop.Data
 
         List<Porudzbine> GetPorudzbine();
         Porudzbine GetById(int porudzbinaId);
-
+        Porudzbine GetHighId();
 
         PorudzbineConfirmation CreatePorudzbina(Porudzbine porudzbinaModel, List<ProizvodConfirmation> proizvodi);
 

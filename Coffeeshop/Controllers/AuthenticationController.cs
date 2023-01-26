@@ -44,7 +44,7 @@ namespace Coffeeshop.Controllers
             }
 
             //Ukoliko autentifikacija nije uspela vraća se status 401
-            return Unauthorized();
+            return StatusCode(StatusCodes.Status401Unauthorized, "Unautorized");
         }
     }
 }

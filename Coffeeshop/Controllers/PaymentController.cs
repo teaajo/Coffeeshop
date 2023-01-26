@@ -67,6 +67,8 @@ namespace Coffeeshop.Controllers
             public string tokenId { get; set; }
             
             public int amount { get; set; }
+
+            public int orderId { get; set; }
         }
     }
 }

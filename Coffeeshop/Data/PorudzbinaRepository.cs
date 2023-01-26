@@ -22,12 +22,12 @@ namespace Coffeeshop.Data
             
 
         }
-        public PorudzbineConfirmation CreatePorudzbina(Porudzbine porudzbinaModel, List<ProizvodConfirmation> proizvodi)//i lista proizvoda
+        public PorudzbineConfirmation CreatePorudzbina(Porudzbine porudzbinaModel, List<ProizvodConfirmation> proizvodi)
         {
             porudzbinaModel.Iznos = 0;
             porudzbinaModel.Datum = DateTime.Now;
             porudzbinaModel.Status = "Aktivan";
-            //pre ovoga prodji kroz proizvode i izracunaj iznos
+ 
             foreach(var a in proizvodi)
             {
                 porudzbinaModel.Iznos += a.Cena;
@@ -39,7 +39,7 @@ namespace Coffeeshop.Data
             }
 
             var createdEntity = context.Porudzbines.Add(porudzbinaModel);
-            //uzmes id odporudzbine i kreiras veze pozivajuci repo od proizvod porudzbina za svaki prosledjeni proizvod
+         
             
 
 
@@ -59,9 +59,17 @@ namespace Coffeeshop.Data
         {
             return context.Porudzbines.FirstOrDefault(e => e.Id == porudzbinaId);
         }
+        public Porudzbine GetHighId()
+        {
+            var a = context.Porudzbines.ToList();
+
+            return a.Last(); 
+
+        }
 
         public List<Porudzbine> GetPorudzbine()
         {
+ 
             return context.Porudzbines.ToList();
         }
         public List<PorudzbineConfirmation> GetPorudzbinaByKorisnikId(int Korisnikid)

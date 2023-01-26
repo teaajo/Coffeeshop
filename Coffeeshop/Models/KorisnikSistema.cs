@@ -22,7 +22,7 @@ namespace Coffeeshop.Models
    
         public string Adresa { get; set; }
         public string Telefon { get; set; }
-      public string Salt { get; set; }
+        public string Salt { get; set; }
         public virtual ICollection<Ocena> Ocenas { get; set; }
     }
 }
